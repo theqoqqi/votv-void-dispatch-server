@@ -17,6 +17,20 @@ use Illuminate\Support\Carbon;
  * @property bool $is_read
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ *
+ * @OA\Schema(
+ *     schema="Mail",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer"),
+ *     @OA\Property(property="recipient_token", type="string"),
+ *     @OA\Property(property="sender", type="string"),
+ *     @OA\Property(property="subject", type="string"),
+ *     @OA\Property(property="body", type="string"),
+ *     @OA\Property(property="deliver_at_minutes", type="integer"),
+ *     @OA\Property(property="is_read", type="boolean"),
+ *     @OA\Property(property="created_at", type="string", format="date-time"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time")
+ * )
  */
 class Mail extends Model {
 
