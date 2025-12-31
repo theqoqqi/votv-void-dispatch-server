@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/mails', [MailController::class, 'store']);
+Route::post('/mails/consume', [MailController::class, 'consume']);
