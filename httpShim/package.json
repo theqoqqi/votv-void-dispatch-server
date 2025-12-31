@@ -1,0 +1,16 @@
+{
+    "name": "http-shim",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "clean": "rmdir /s /q dist || exit 0",
+        "build": "npm run clean && npm run build:files && npm run build:deps",
+        "build:files": "mkdir dist && mkdir dist\\VoidDispatchHttpShim && xcopy httpShim.js dist\\VoidDispatchHttpShim /Y && xcopy start.bat dist\\VoidDispatchHttpShim /Y && xcopy package.json dist\\VoidDispatchHttpShim /Y",
+        "build:deps": "xcopy node_modules dist\\VoidDispatchHttpShim\\node_modules\\ /E /I /Y",
+        "install": "xcopy /Y /E /I dist\\VoidDispatchHttpShim \"D:\\Games\\Voices Of The Void 0.8.2c\\VotV\\VoidDispatchHttpShim\"",
+        "start": "node httpShim.js"
+    },
+    "devDependencies": {
+        "axios": "^1.13.2"
+    }
+}
