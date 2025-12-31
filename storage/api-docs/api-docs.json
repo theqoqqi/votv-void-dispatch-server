@@ -1,0 +1,188 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Voices of the Void - Void Dispatch API",
+        "description": "API for Void Dispatch",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Host URL"
+        }
+    ],
+    "paths": {
+        "/api/mails": {
+            "post": {
+                "tags": [
+                    "Mails"
+                ],
+                "summary": "Добавить письмо",
+                "operationId": "38fe45719214893161a95cce82b4cf7e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "sender",
+                                    "subject",
+                                    "body",
+                                    "deliver_at_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Token игрока, получателя письма",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "sender": {
+                                        "description": "Отправитель письма",
+                                        "type": "string",
+                                        "enum": [
+                                            "Dr_Bao",
+                                            "Prof_Lea",
+                                            "Auto",
+                                            "Dr_Max",
+                                            "Dr_Ken",
+                                            "Dr_Ena",
+                                            "Dr_Ula",
+                                            "Dr_Ler",
+                                            "user",
+                                            "Dr_Noa"
+                                        ],
+                                        "example": "Dr_Bao"
+                                    },
+                                    "subject": {
+                                        "description": "Заголовок письма",
+                                        "type": "string",
+                                        "example": "Your mission"
+                                    },
+                                    "body": {
+                                        "description": "Содержимое письма",
+                                        "type": "string",
+                                        "example": "Collect 10 samples"
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Внутриигровое время доставки письма в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mail created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Mail"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/mails/consume": {
+            "post": {
+                "tags": [
+                    "Mails"
+                ],
+                "summary": "Получить новые письма и пометить их прочитанными",
+                "operationId": "464623f56995fe369627920ebfed3e14",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "current_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Токен игрока, получателя письма",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "current_minutes": {
+                                        "description": "Текущее игровое время в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Список доставленных писем, помеченных как прочитанные",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Mail"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Mail": {
+                "properties": {
+                    "id": {
+                        "description": "Class Mail",
+                        "type": "integer"
+                    },
+                    "recipient_token": {
+                        "type": "string"
+                    },
+                    "sender": {
+                        "type": "string"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "deliver_at_minutes": {
+                        "type": "integer"
+                    },
+                    "is_read": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Mails",
+            "description": "Mails"
+        }
+    ]
+}
