@@ -13,6 +13,52 @@
     ],
     "paths": {
         "/api/mails": {
+            "get": {
+                "tags": [
+                    "Mails"
+                ],
+                "summary": "Получить все письма игрока",
+                "operationId": "4fbe58b96147dd01f2c4ad51212293ca",
+                "parameters": [
+                    {
+                        "name": "recipient_token",
+                        "in": "query",
+                        "description": "Token игрока",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "player123"
+                        }
+                    },
+                    {
+                        "name": "current_minutes",
+                        "in": "query",
+                        "description": "Текущее внутриигровое время в минутах",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список писем игрока",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Mail"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "recipient_token не передан"
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Mails"

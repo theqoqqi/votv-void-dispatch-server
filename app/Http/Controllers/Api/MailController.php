@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Mail\ConsumeMailsAction;
+use App\Actions\Mail\GetMailsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConsumeMailsRequest;
 use App\Http\Requests\StoreMailRequest;
+use App\Http\Requests\GetMailsRequest;
 use App\Models\Mail;
 use Illuminate\Http\JsonResponse;
 
@@ -79,6 +81,45 @@ class MailController extends Controller {
         $mail = Mail::query()->create($request->validated());
 
         return response()->json($mail, 201);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/mails",
+     *     summary="Получить все письма игрока",
+     *     tags={"Mails"},
+     *     @OA\Parameter(
+     *         name="recipient_token",
+     *         in="query",
+     *         required=true,
+     *         description="Token игрока",
+     *         @OA\Schema(type="string", example="player123")
+     *     ),
+     *     @OA\Parameter(
+     *         name="current_minutes",
+     *         in="query",
+     *         required=false,
+     *         description="Текущее внутриигровое время в минутах",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список писем игрока",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Mail"))
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="recipient_token не передан"
+     *     )
+     * )
+     */
+    public function index(GetMailsRequest $request, GetMailsAction $action): JsonResponse {
+        $mails = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($mails);
     }
 
     /**
