@@ -124,6 +124,32 @@
             }
         },
         "/api/effects/{effect}": {
+            "delete": {
+                "tags": [
+                    "Effects"
+                ],
+                "summary": "Удалить внутриигровой эффект",
+                "operationId": "9e87709a6f1de6621855c075b72ee39e",
+                "parameters": [
+                    {
+                        "name": "effect",
+                        "in": "path",
+                        "description": "ID эффекта",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Effect deleted successfully"
+                    },
+                    "404": {
+                        "description": "Effect not found"
+                    }
+                }
+            },
             "patch": {
                 "tags": [
                     "Effects"

@@ -124,6 +124,31 @@ class EffectController extends Controller {
     }
 
     /**
+     * @OA\Delete(
+     *     path="/api/effects/{effect}",
+     *     summary="Удалить внутриигровой эффект",
+     *     tags={"Effects"},
+     *     @OA\Parameter(
+     *         name="effect",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID эффекта"
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Effect deleted successfully"
+     *     ),
+     *     @OA\Response(response=404, description="Effect not found")
+     * )
+     */
+    public function destroy(Effect $effect): JsonResponse {
+        $effect->delete();
+
+        return response()->json(null, 204);
+    }
+
+    /**
      * @OA\Get(
      *     path="/api/effects",
      *     summary="Получить все внутриигровые эффекты",
