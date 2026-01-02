@@ -14,11 +14,11 @@ class UpdateMailRequest extends FormRequest {
 
     public function rules(): array {
         return [
-            'recipient_token' => 'sometimes|string|max:128',
+            'recipient_token' => ['sometimes', 'string', 'max:128'],
             'sender' => ['sometimes', Rule::in(Mail::SENDERS)],
-            'subject' => 'sometimes|string|max:255',
-            'body' => 'sometimes|string',
-            'deliver_at_minutes' => 'sometimes|integer|min:0',
+            'subject' => ['sometimes', 'string', 'max:255'],
+            'body' => ['sometimes', 'string'],
+            'deliver_at_minutes' => ['sometimes', 'integer', 'min:0'],
         ];
     }
 }

@@ -12,8 +12,8 @@ class ConsumeMailsRequest extends FormRequest {
 
     public function rules(): array {
         return [
-            'recipient_token' => 'required|string|max:128',
-            'current_minutes' => 'required|integer|min:0',
+            'recipient_token' => ['required', 'string', 'max:128'],
+            'current_minutes' => ['required', 'integer', 'min:0'],
         ];
     }
 }
