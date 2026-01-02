@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\MailController;
+use App\Http\Controllers\Api\EffectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('/mails', MailController::class);
 Route::post('/mails/consume', [MailController::class, 'consume']);
+
+Route::apiResource('/effects', EffectController::class);
