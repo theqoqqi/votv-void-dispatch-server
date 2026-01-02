@@ -14,8 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/mails', [MailController::class, 'index']);
-Route::post('/mails', [MailController::class, 'store']);
-Route::patch('/mails/{mail}', [MailController::class, 'update']);
-Route::delete('/mails/{mail}', [MailController::class, 'destroy']);
+Route::apiResource('/mails', MailController::class);
 Route::post('/mails/consume', [MailController::class, 'consume']);
