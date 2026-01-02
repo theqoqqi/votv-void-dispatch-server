@@ -13,6 +13,52 @@
     ],
     "paths": {
         "/api/effects": {
+            "get": {
+                "tags": [
+                    "Effects"
+                ],
+                "summary": "Получить все внутриигровые эффекты",
+                "operationId": "d08a997de614a65a8959b9545804367b",
+                "parameters": [
+                    {
+                        "name": "recipient_token",
+                        "in": "query",
+                        "description": "Token игрока",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "player123"
+                        }
+                    },
+                    {
+                        "name": "current_minutes",
+                        "in": "query",
+                        "description": "Текущее внутриигровое время в минутах",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список эффектов игрока",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Effect"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "recipient_token не передан"
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Effects"

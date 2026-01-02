@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Effect\GetEffectsAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetEffectsRequest;
 use App\Http\Requests\StoreEffectRequest;
 use App\Models\Effect;
 use Illuminate\Http\JsonResponse;
@@ -59,5 +61,44 @@ class EffectController extends Controller {
         $effect = Effect::query()->create($request->validated());
 
         return response()->json($effect, 201);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/effects",
+     *     summary="Получить все внутриигровые эффекты",
+     *     tags={"Effects"},
+     *     @OA\Parameter(
+     *         name="recipient_token",
+     *         in="query",
+     *         required=true,
+     *         description="Token игрока",
+     *         @OA\Schema(type="string", example="player123")
+     *     ),
+     *     @OA\Parameter(
+     *         name="current_minutes",
+     *         in="query",
+     *         required=false,
+     *         description="Текущее внутриигровое время в минутах",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список эффектов игрока",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Effect"))
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="recipient_token не передан"
+     *     )
+     * )
+     */
+    public function index(GetEffectsRequest $request, GetEffectsAction $action): JsonResponse {
+        $effects = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($effects);
     }
 }
