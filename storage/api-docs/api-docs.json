@@ -12,6 +12,71 @@
         }
     ],
     "paths": {
+        "/api/effects": {
+            "post": {
+                "tags": [
+                    "Effects"
+                ],
+                "summary": "Применить внутриигровой эффект",
+                "operationId": "dc3582764cda6c71ab72f7c55a7ea248",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "property",
+                                    "value",
+                                    "deliver_at_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Token игрока",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "property": {
+                                        "description": "Свойство, которое будет изменено",
+                                        "type": "string",
+                                        "enum": [
+                                            "points",
+                                            "food",
+                                            "health",
+                                            "sleep"
+                                        ],
+                                        "example": "points"
+                                    },
+                                    "value": {
+                                        "description": "Значение (например +10, -5)",
+                                        "type": "string",
+                                        "example": "+50"
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Внутриигровое время применения эффекта в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Effect created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Effect"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/mails": {
             "get": {
                 "tags": [
@@ -298,6 +363,39 @@
     },
     "components": {
         "schemas": {
+            "Effect": {
+                "properties": {
+                    "id": {
+                        "description": "Class Effect",
+                        "type": "integer"
+                    },
+                    "recipient_token": {
+                        "type": "string"
+                    },
+                    "property": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "deliver_at_minutes": {
+                        "type": "integer"
+                    },
+                    "is_applied": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
             "Mail": {
                 "properties": {
                     "id": {
@@ -336,6 +434,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Effects",
+            "description": "Effects"
+        },
         {
             "name": "Mails",
             "description": "Mails"
