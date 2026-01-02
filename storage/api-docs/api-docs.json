@@ -222,6 +222,56 @@
                 }
             }
         },
+        "/api/effects/consume": {
+            "post": {
+                "tags": [
+                    "Effects"
+                ],
+                "summary": "Получить новые внутриигровые эффекты и пометить их примененными",
+                "operationId": "ff195ddf019c04401cef60253315ac73",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "current_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Токен игрока",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "current_minutes": {
+                                        "description": "Текущее игровое время в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Список новых внутриигровых эффектов, помеченных как примененные",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Effect"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/mails": {
             "get": {
                 "tags": [

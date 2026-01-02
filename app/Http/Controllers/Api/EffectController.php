@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Effect\ConsumeEffectsAction;
 use App\Actions\Effect\GetEffectsAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ConsumeEffectsRequest;
 use App\Http\Requests\GetEffectsRequest;
 use App\Http\Requests\StoreEffectRequest;
 use App\Http\Requests\UpdateEffectRequest;
@@ -180,6 +182,48 @@ class EffectController extends Controller {
      */
     public function index(GetEffectsRequest $request, GetEffectsAction $action): JsonResponse {
         $effects = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($effects);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/effects/consume",
+     *     summary="Получить новые внутриигровые эффекты и пометить их примененными",
+     *     tags={"Effects"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"recipient_token","current_minutes"},
+     *                 @OA\Property(
+     *                     property="recipient_token",
+     *                     type="string",
+     *                     example="player123",
+     *                     description="Токен игрока"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="current_minutes",
+     *                     type="integer",
+     *                     example=1440,
+     *                     description="Текущее игровое время в минутах"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список новых внутриигровых эффектов, помеченных как примененные",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Effect"))
+     *     )
+     * )
+     */
+    public function consume(ConsumeEffectsRequest $request, ConsumeEffectsAction $consumeEffectsAction): JsonResponse {
+        $effects = $consumeEffectsAction(
             $request->input('recipient_token'),
             $request->input('current_minutes')
         );

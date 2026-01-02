@@ -19,3 +19,4 @@ Route::apiResource('/mails', MailController::class);
 Route::post('/mails/consume', [MailController::class, 'consume']);
 
 Route::apiResource('/effects', EffectController::class);
+Route::post('/effects/consume', [EffectController::class, 'consume']);
