@@ -7,6 +7,7 @@ use App\Actions\Mail\GetMailsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConsumeMailsRequest;
 use App\Http\Requests\StoreMailRequest;
+use App\Http\Requests\UpdateMailRequest;
 use App\Http\Requests\GetMailsRequest;
 use App\Models\Mail;
 use Illuminate\Http\JsonResponse;
@@ -81,6 +82,82 @@ class MailController extends Controller {
         $mail = Mail::query()->create($request->validated());
 
         return response()->json($mail, 201);
+    }
+
+    /**
+     * @OA\Patch(
+     *     path="/api/mails/{mail}",
+     *     summary="Обновить письмо",
+     *     tags={"Mails"},
+     *     @OA\Parameter(
+     *         name="mail",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID письма"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="recipient_token",
+     *                     type="string",
+     *                     example="player123",
+     *                     description="Token игрока, получателя письма"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="sender",
+     *                     type="string",
+     *                     enum={
+     *                         "Dr_Bao",
+     *                         "Prof_Lea",
+     *                         "Auto",
+     *                         "Dr_Max",
+     *                         "Dr_Ken",
+     *                         "Dr_Ena",
+     *                         "Dr_Ula",
+     *                         "Dr_Ler",
+     *                         "user",
+     *                         "Dr_Noa"
+     *                     },
+     *                     example="Dr_Bao",
+     *                     description="Отправитель письма"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="subject",
+     *                     type="string",
+     *                     example="Your mission",
+     *                     description="Заголовок письма"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="body",
+     *                     type="string",
+     *                     example="Collect 10 samples",
+     *                     description="Содержимое письма"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="deliver_at_minutes",
+     *                     type="integer",
+     *                     example=1440,
+     *                     description="Внутриигровое время доставки письма в минутах"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mail updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Mail")
+     *     ),
+     *     @OA\Response(response=404, description="Mail not found")
+     * )
+     */
+    public function update(UpdateMailRequest $request, Mail $mail): JsonResponse {
+        $mail->update($request->validated());
+
+        return response()->json($mail);
     }
 
     /**

@@ -135,6 +135,90 @@
                 }
             }
         },
+        "/api/mails/{mail}": {
+            "patch": {
+                "tags": [
+                    "Mails"
+                ],
+                "summary": "Обновить письмо",
+                "operationId": "138df9b7485b3ad1556708645f5aa3c3",
+                "parameters": [
+                    {
+                        "name": "mail",
+                        "in": "path",
+                        "description": "ID письма",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Token игрока, получателя письма",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "sender": {
+                                        "description": "Отправитель письма",
+                                        "type": "string",
+                                        "enum": [
+                                            "Dr_Bao",
+                                            "Prof_Lea",
+                                            "Auto",
+                                            "Dr_Max",
+                                            "Dr_Ken",
+                                            "Dr_Ena",
+                                            "Dr_Ula",
+                                            "Dr_Ler",
+                                            "user",
+                                            "Dr_Noa"
+                                        ],
+                                        "example": "Dr_Bao"
+                                    },
+                                    "subject": {
+                                        "description": "Заголовок письма",
+                                        "type": "string",
+                                        "example": "Your mission"
+                                    },
+                                    "body": {
+                                        "description": "Содержимое письма",
+                                        "type": "string",
+                                        "example": "Collect 10 samples"
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Внутриигровое время доставки письма в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mail updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Mail"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mail not found"
+                    }
+                }
+            }
+        },
         "/api/mails/consume": {
             "post": {
                 "tags": [
