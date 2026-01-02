@@ -6,9 +6,9 @@ use App\Actions\Mail\ConsumeMailsAction;
 use App\Actions\Mail\GetMailsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConsumeMailsRequest;
+use App\Http\Requests\GetMailsRequest;
 use App\Http\Requests\StoreMailRequest;
 use App\Http\Requests\UpdateMailRequest;
-use App\Http\Requests\GetMailsRequest;
 use App\Models\Mail;
 use Illuminate\Http\JsonResponse;
 
@@ -158,6 +158,31 @@ class MailController extends Controller {
         $mail->update($request->validated());
 
         return response()->json($mail);
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/mails/{mail}",
+     *     summary="Удалить письмо",
+     *     tags={"Mails"},
+     *     @OA\Parameter(
+     *         name="mail",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID письма"
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Mail deleted successfully"
+     *     ),
+     *     @OA\Response(response=404, description="Mail not found")
+     * )
+     */
+    public function destroy(Mail $mail): JsonResponse {
+        $mail->delete();
+
+        return response()->json(null, 204);
     }
 
     /**

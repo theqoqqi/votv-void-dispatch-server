@@ -136,6 +136,32 @@
             }
         },
         "/api/mails/{mail}": {
+            "delete": {
+                "tags": [
+                    "Mails"
+                ],
+                "summary": "Удалить письмо",
+                "operationId": "84a8209660539635353c69f81b2c3933",
+                "parameters": [
+                    {
+                        "name": "mail",
+                        "in": "path",
+                        "description": "ID письма",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Mail deleted successfully"
+                    },
+                    "404": {
+                        "description": "Mail not found"
+                    }
+                }
+            },
             "patch": {
                 "tags": [
                     "Mails"
