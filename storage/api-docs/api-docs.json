@@ -123,6 +123,79 @@
                 }
             }
         },
+        "/api/effects/{effect}": {
+            "patch": {
+                "tags": [
+                    "Effects"
+                ],
+                "summary": "Обновить внутриигровой эффект",
+                "operationId": "00a1f4c223884bab14e521f638b8f214",
+                "parameters": [
+                    {
+                        "name": "effect",
+                        "in": "path",
+                        "description": "ID эффекта",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Token игрока",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "property": {
+                                        "description": "Свойство, которое будет изменено",
+                                        "type": "string",
+                                        "enum": [
+                                            "points",
+                                            "food",
+                                            "health",
+                                            "sleep"
+                                        ],
+                                        "example": "points"
+                                    },
+                                    "value": {
+                                        "description": "Значение (например +10, -5)",
+                                        "type": "string",
+                                        "example": "+50"
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Внутриигровое время применения эффекта в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Effect updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Effect"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Effect not found"
+                    }
+                }
+            }
+        },
         "/api/mails": {
             "get": {
                 "tags": [
