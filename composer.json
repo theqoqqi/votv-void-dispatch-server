@@ -37,6 +37,9 @@
         }
     },
     "scripts": {
+        "docker-build": "docker compose build",
+        "docker-up": "docker compose up -d",
+        "docker-down": "docker compose down",
         "generate-docs": [
             "php artisan l5-swagger:generate"
         ],
