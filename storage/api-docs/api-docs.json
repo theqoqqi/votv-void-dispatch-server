@@ -591,6 +591,38 @@
                 },
                 "type": "object"
             },
+            "Hint": {
+                "properties": {
+                    "id": {
+                        "description": "Class Hint",
+                        "type": "integer"
+                    },
+                    "recipient_token": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "deliver_at_minutes": {
+                        "type": "integer"
+                    },
+                    "is_consumed": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
             "Mail": {
                 "properties": {
                     "id": {
