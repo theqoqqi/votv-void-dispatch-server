@@ -2,24 +2,13 @@
 
 namespace App\Actions\Effect;
 
+use App\Actions\BaseConsumeAction;
 use App\Models\Effect;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
-class ConsumeEffectsAction {
+class ConsumeEffectsAction extends BaseConsumeAction {
 
-    public function __invoke(string $recipientToken, int $currentMinutes): Collection {
-        $effects = Effect::query()
-            ->where('recipient_token', $recipientToken)
-            ->where('deliver_at_minutes', '<=', $currentMinutes)
-            ->where('is_consumed', false)
-            ->get();
-
-        if ($effects->isNotEmpty()) {
-            Effect::query()
-                ->whereIn('id', $effects->pluck('id'))
-                ->update(['is_consumed' => true]);
-        }
-
-        return $effects;
+    protected function createQuery(): Builder {
+        return Effect::query();
     }
 }

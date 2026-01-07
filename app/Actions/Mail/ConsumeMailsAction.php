@@ -2,24 +2,13 @@
 
 namespace App\Actions\Mail;
 
+use App\Actions\BaseConsumeAction;
 use App\Models\Mail;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
-class ConsumeMailsAction {
+class ConsumeMailsAction extends BaseConsumeAction {
 
-    public function __invoke(string $recipientToken, int $currentMinutes): Collection {
-        $mails = Mail::query()
-            ->where('recipient_token', $recipientToken)
-            ->where('deliver_at_minutes', '<=', $currentMinutes)
-            ->where('is_consumed', false)
-            ->get();
-
-        if ($mails->isNotEmpty()) {
-            Mail::query()
-                ->whereIn('id', $mails->pluck('id'))
-                ->update(['is_consumed' => true]);
-        }
-
-        return $mails;
+    protected function createQuery(): Builder {
+        return Mail::query();
     }
 }
