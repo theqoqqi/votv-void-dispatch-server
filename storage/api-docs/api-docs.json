@@ -273,6 +273,52 @@
             }
         },
         "/api/hints": {
+            "get": {
+                "tags": [
+                    "Hints"
+                ],
+                "summary": "Получить все всплывающие уведомления (hints) игрока",
+                "operationId": "a1c9d195fec22ace439cb20f4d65cc0e",
+                "parameters": [
+                    {
+                        "name": "recipient_token",
+                        "in": "query",
+                        "description": "Token игрока",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "player123"
+                        }
+                    },
+                    {
+                        "name": "current_minutes",
+                        "in": "query",
+                        "description": "Текущее внутриигровое время в минутах",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список уведомлений игрока",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Hint"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "recipient_token не передан"
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Hints"

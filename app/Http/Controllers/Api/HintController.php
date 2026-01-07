@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Hint\GetHintsAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GenericGetRequest;
 use App\Http\Requests\Hint\StoreHintRequest;
 use App\Models\Hint;
 use Illuminate\Http\JsonResponse;
@@ -60,5 +62,44 @@ class HintController extends Controller {
         $hint = Hint::query()->create($request->validated());
 
         return response()->json($hint, 201);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/hints",
+     *     summary="Получить все всплывающие уведомления (hints) игрока",
+     *     tags={"Hints"},
+     *     @OA\Parameter(
+     *         name="recipient_token",
+     *         in="query",
+     *         required=true,
+     *         description="Token игрока",
+     *         @OA\Schema(type="string", example="player123")
+     *     ),
+     *     @OA\Parameter(
+     *         name="current_minutes",
+     *         in="query",
+     *         required=false,
+     *         description="Текущее внутриигровое время в минутах",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список уведомлений игрока",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Hint"))
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="recipient_token не передан"
+     *     )
+     * )
+     */
+    public function index(GenericGetRequest $request, GetHintsAction $action): JsonResponse {
+        $hints = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($hints);
     }
 }
