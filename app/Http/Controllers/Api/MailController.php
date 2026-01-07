@@ -6,7 +6,7 @@ use App\Actions\Mail\ConsumeMailsAction;
 use App\Actions\Mail\GetMailsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Mail\ConsumeMailsRequest;
-use App\Http\Requests\Mail\GetMailsRequest;
+use App\Http\Requests\GenericGetRequest;
 use App\Http\Requests\Mail\StoreMailRequest;
 use App\Http\Requests\Mail\UpdateMailRequest;
 use App\Models\Mail;
@@ -215,7 +215,7 @@ class MailController extends Controller {
      *     )
      * )
      */
-    public function index(GetMailsRequest $request, GetMailsAction $action): JsonResponse {
+    public function index(GenericGetRequest $request, GetMailsAction $action): JsonResponse {
         $mails = $action(
             $request->input('recipient_token'),
             $request->input('current_minutes')

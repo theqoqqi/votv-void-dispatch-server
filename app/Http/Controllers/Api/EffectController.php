@@ -6,9 +6,9 @@ use App\Actions\Effect\ConsumeEffectsAction;
 use App\Actions\Effect\GetEffectsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Effect\ConsumeEffectsRequest;
-use App\Http\Requests\Effect\GetEffectsRequest;
 use App\Http\Requests\Effect\StoreEffectRequest;
 use App\Http\Requests\Effect\UpdateEffectRequest;
+use App\Http\Requests\GenericGetRequest;
 use App\Models\Effect;
 use Illuminate\Http\JsonResponse;
 
@@ -180,7 +180,7 @@ class EffectController extends Controller {
      *     )
      * )
      */
-    public function index(GetEffectsRequest $request, GetEffectsAction $action): JsonResponse {
+    public function index(GenericGetRequest $request, GetEffectsAction $action): JsonResponse {
         $effects = $action(
             $request->input('recipient_token'),
             $request->input('current_minutes')
