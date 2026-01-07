@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\HintController;
 use App\Http\Controllers\Api\MailController;
 use App\Http\Controllers\Api\EffectController;
+use App\Http\Controllers\Api\SpawnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,6 @@ Route::post('/effects/consume', [EffectController::class, 'consume']);
 
 Route::apiResource('/hints', HintController::class);
 Route::post('/hints/consume', [HintController::class, 'consume']);
+
+Route::apiResource('/spawns', SpawnController::class);
+Route::post('/spawns/consume', [SpawnController::class, 'consume']);
