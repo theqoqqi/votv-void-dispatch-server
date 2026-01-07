@@ -14,7 +14,7 @@ use Illuminate\Support\Carbon;
  * @property string $subject
  * @property string $body
  * @property int $deliver_at_minutes
- * @property bool $is_read
+ * @property bool $is_consumed
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
@@ -27,7 +27,7 @@ use Illuminate\Support\Carbon;
  *     @OA\Property(property="subject", type="string"),
  *     @OA\Property(property="body", type="string"),
  *     @OA\Property(property="deliver_at_minutes", type="integer"),
- *     @OA\Property(property="is_read", type="boolean"),
+ *     @OA\Property(property="is_consumed", type="boolean"),
  *     @OA\Property(property="created_at", type="string", format="date-time"),
  *     @OA\Property(property="updated_at", type="string", format="date-time")
  * )
@@ -53,11 +53,11 @@ class Mail extends Model {
         'subject',
         'body',
         'deliver_at_minutes',
-        'is_read',
+        'is_consumed',
     ];
 
     protected $casts = [
-        'is_read' => 'boolean',
+        'is_consumed' => 'boolean',
         'deliver_at_minutes' => 'integer',
     ];
 }

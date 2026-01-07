@@ -11,13 +11,13 @@ class ConsumeMailsAction {
         $mails = Mail::query()
             ->where('recipient_token', $recipientToken)
             ->where('deliver_at_minutes', '<=', $currentMinutes)
-            ->where('is_read', false)
+            ->where('is_consumed', false)
             ->get();
 
         if ($mails->isNotEmpty()) {
             Mail::query()
                 ->whereIn('id', $mails->pluck('id'))
-                ->update(['is_read' => true]);
+                ->update(['is_consumed' => true]);
         }
 
         return $mails;
