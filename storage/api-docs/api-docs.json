@@ -967,6 +967,122 @@
                     }
                 }
             }
+        },
+        "/api/spawns/{spawn}": {
+            "patch": {
+                "tags": [
+                    "Spawns"
+                ],
+                "summary": "Обновить спаун пропа",
+                "operationId": "fc5c2138673822a77c63fe29d81f4591",
+                "parameters": [
+                    {
+                        "name": "spawn",
+                        "in": "path",
+                        "description": "ID спауна",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Токен игрока или локации",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "name": {
+                                        "description": "Название пропа для спауна",
+                                        "type": "string",
+                                        "example": "prop_001"
+                                    },
+                                    "location_x": {
+                                        "description": "Координата X",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10.5
+                                    },
+                                    "location_y": {
+                                        "description": "Координата Y",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 20.3
+                                    },
+                                    "location_z": {
+                                        "description": "Координата Z",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5
+                                    },
+                                    "rotation_x": {
+                                        "description": "Вращение по X",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 0
+                                    },
+                                    "rotation_y": {
+                                        "description": "Вращение по Y",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 90
+                                    },
+                                    "rotation_z": {
+                                        "description": "Вращение по Z",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 0
+                                    },
+                                    "scale_x": {
+                                        "description": "Масштаб по X",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 1
+                                    },
+                                    "scale_y": {
+                                        "description": "Масштаб по Y",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 1
+                                    },
+                                    "scale_z": {
+                                        "description": "Масштаб по Z",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 1
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Время спауна в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Spawn updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Spawn"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Spawn not found"
+                    }
+                }
+            }
         }
     },
     "components": {

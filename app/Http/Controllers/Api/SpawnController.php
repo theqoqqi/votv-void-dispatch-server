@@ -6,6 +6,7 @@ use App\Actions\Spawn\GetSpawnsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GenericGetRequest;
 use App\Http\Requests\Spawn\StoreSpawnRequest;
+use App\Http\Requests\Spawn\UpdateSpawnRequest;
 use App\Models\Spawn;
 use Illuminate\Http\JsonResponse;
 
@@ -118,6 +119,121 @@ class SpawnController extends Controller {
         $spawn = Spawn::query()->create($request->validated());
 
         return response()->json($spawn, 201);
+    }
+
+    /**
+     * @OA\Patch(
+     *     path="/api/spawns/{spawn}",
+     *     summary="Обновить спаун пропа",
+     *     tags={"Spawns"},
+     *     @OA\Parameter(
+     *         name="spawn",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID спауна"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="recipient_token",
+     *                     type="string",
+     *                     example="player123",
+     *                     description="Токен игрока или локации"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     example="prop_001",
+     *                     description="Название пропа для спауна"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="location_x",
+     *                     type="number",
+     *                     format="float",
+     *                     example=10.5,
+     *                     description="Координата X"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="location_y",
+     *                     type="number",
+     *                     format="float",
+     *                     example=20.3,
+     *                     description="Координата Y"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="location_z",
+     *                     type="number",
+     *                     format="float",
+     *                     example=5.0,
+     *                     description="Координата Z"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="rotation_x",
+     *                     type="number",
+     *                     format="float",
+     *                     example=0,
+     *                     description="Вращение по X"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="rotation_y",
+     *                     type="number",
+     *                     format="float",
+     *                     example=90,
+     *                     description="Вращение по Y"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="rotation_z",
+     *                     type="number",
+     *                     format="float",
+     *                     example=0,
+     *                     description="Вращение по Z"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="scale_x",
+     *                     type="number",
+     *                     format="float",
+     *                     example=1.0,
+     *                     description="Масштаб по X"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="scale_y",
+     *                     type="number",
+     *                     format="float",
+     *                     example=1.0,
+     *                     description="Масштаб по Y"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="scale_z",
+     *                     type="number",
+     *                     format="float",
+     *                     example=1.0,
+     *                     description="Масштаб по Z"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="deliver_at_minutes",
+     *                     type="integer",
+     *                     example=1440,
+     *                     description="Время спауна в минутах"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Spawn updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Spawn")
+     *     ),
+     *     @OA\Response(response=404, description="Spawn not found")
+     * )
+     */
+    public function update(UpdateSpawnRequest $request, Spawn $spawn): JsonResponse {
+        $spawn->update($request->validated());
+
+        return response()->json($spawn);
     }
 
     /**
