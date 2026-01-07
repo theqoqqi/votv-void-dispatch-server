@@ -917,6 +917,80 @@
                     }
                 },
                 "type": "object"
+            },
+            "Spawn": {
+                "properties": {
+                    "id": {
+                        "description": "Class Spawn",
+                        "type": "integer"
+                    },
+                    "recipient_token": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "location_x": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "location_y": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "location_z": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "rotation_x": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "rotation_y": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "rotation_z": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "scale_x": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "scale_y": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "scale_z": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "deliver_at_minutes": {
+                        "type": "integer"
+                    },
+                    "is_consumed": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
             }
         }
     },
