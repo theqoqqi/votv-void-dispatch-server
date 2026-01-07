@@ -125,6 +125,31 @@ class HintController extends Controller {
     }
 
     /**
+     * @OA\Delete(
+     *     path="/api/hints/{hint}",
+     *     summary="Удалить всплывающее уведомление (hint)",
+     *     tags={"Hints"},
+     *     @OA\Parameter(
+     *         name="hint",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID уведомления"
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Hint deleted successfully"
+     *     ),
+     *     @OA\Response(response=404, description="Hint not found")
+     * )
+     */
+    public function destroy(Hint $hint): JsonResponse {
+        $hint->delete();
+
+        return response()->json(null, 204);
+    }
+
+    /**
      * @OA\Get(
      *     path="/api/hints",
      *     summary="Получить все всплывающие уведомления (hints) игрока",

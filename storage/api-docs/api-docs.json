@@ -384,6 +384,32 @@
             }
         },
         "/api/hints/{hint}": {
+            "delete": {
+                "tags": [
+                    "Hints"
+                ],
+                "summary": "Удалить всплывающее уведомление (hint)",
+                "operationId": "7c314ddd00af7a8c1b02d66cd70428a8",
+                "parameters": [
+                    {
+                        "name": "hint",
+                        "in": "path",
+                        "description": "ID уведомления",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Hint deleted successfully"
+                    },
+                    "404": {
+                        "description": "Hint not found"
+                    }
+                }
+            },
             "patch": {
                 "tags": [
                     "Hints"
