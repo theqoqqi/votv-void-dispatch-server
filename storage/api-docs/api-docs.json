@@ -272,6 +272,71 @@
                 }
             }
         },
+        "/api/hints": {
+            "post": {
+                "tags": [
+                    "Hints"
+                ],
+                "summary": "Добавить всплывающее уведомление (hint)",
+                "operationId": "7526c01b4b2313d1cd3c983b39179136",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "type",
+                                    "text",
+                                    "deliver_at_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Token игрока, получателя уведомления",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "type": {
+                                        "description": "Тип всплывающего уведомления",
+                                        "type": "string",
+                                        "enum": [
+                                            "info",
+                                            "warning",
+                                            "error",
+                                            "thought"
+                                        ],
+                                        "example": "info"
+                                    },
+                                    "text": {
+                                        "description": "Текст уведомления",
+                                        "type": "string",
+                                        "example": "You have a new mission"
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Внутриигровое время доставки в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Hint created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Hint"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/mails": {
             "get": {
                 "tags": [
@@ -664,6 +729,10 @@
         {
             "name": "Effects",
             "description": "Effects"
+        },
+        {
+            "name": "Hints",
+            "description": "Hints"
         },
         {
             "name": "Mails",
