@@ -1109,6 +1109,56 @@
                     }
                 }
             }
+        },
+        "/api/spawns/consume": {
+            "post": {
+                "tags": [
+                    "Spawns"
+                ],
+                "summary": "Получить новые спауны пропов и пометить их как выполненные",
+                "operationId": "370100ae6bf1c87d63a75fb6a9214409",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "current_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Токен игрока или локации",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "current_minutes": {
+                                        "description": "Текущее игровое время в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Список выполненных спаунов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Spawn"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

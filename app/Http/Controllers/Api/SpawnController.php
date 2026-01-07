@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Spawn\ConsumeSpawnsAction;
 use App\Actions\Spawn\GetSpawnsAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GenericConsumeRequest;
 use App\Http\Requests\GenericGetRequest;
 use App\Http\Requests\Spawn\StoreSpawnRequest;
 use App\Http\Requests\Spawn\UpdateSpawnRequest;
@@ -293,6 +295,48 @@ class SpawnController extends Controller {
      */
     public function index(GenericGetRequest $request, GetSpawnsAction $action): JsonResponse {
         $spawns = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($spawns);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/spawns/consume",
+     *     summary="Получить новые спауны пропов и пометить их как выполненные",
+     *     tags={"Spawns"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"recipient_token","current_minutes"},
+     *                 @OA\Property(
+     *                     property="recipient_token",
+     *                     type="string",
+     *                     example="player123",
+     *                     description="Токен игрока или локации"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="current_minutes",
+     *                     type="integer",
+     *                     example=1440,
+     *                     description="Текущее игровое время в минутах"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список выполненных спаунов",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Spawn"))
+     *     )
+     * )
+     */
+    public function consume(GenericConsumeRequest $request, ConsumeSpawnsAction $consumeSpawnsAction): JsonResponse {
+        $spawns = $consumeSpawnsAction(
             $request->input('recipient_token'),
             $request->input('current_minutes')
         );
