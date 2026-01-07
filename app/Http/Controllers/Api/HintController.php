@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Hint\ConsumeHintsAction;
 use App\Actions\Hint\GetHintsAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GenericConsumeRequest;
 use App\Http\Requests\GenericGetRequest;
 use App\Http\Requests\Hint\StoreHintRequest;
 use App\Http\Requests\Hint\UpdateHintRequest;
@@ -181,6 +183,48 @@ class HintController extends Controller {
      */
     public function index(GenericGetRequest $request, GetHintsAction $action): JsonResponse {
         $hints = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($hints);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/hints/consume",
+     *     summary="Получить новые всплывающие уведомления (hints) и пометить их как прочитанные",
+     *     tags={"Hints"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"recipient_token","current_minutes"},
+     *                 @OA\Property(
+     *                     property="recipient_token",
+     *                     type="string",
+     *                     example="player123",
+     *                     description="Токен игрока, получателя уведомления"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="current_minutes",
+     *                     type="integer",
+     *                     example=1440,
+     *                     description="Текущее игровое время в минутах"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список доставленных уведомлений, помеченных как прочитанные",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Hint"))
+     *     )
+     * )
+     */
+    public function consume(GenericConsumeRequest $request, ConsumeHintsAction $consumeHintsAction): JsonResponse {
+        $hints = $consumeHintsAction(
             $request->input('recipient_token'),
             $request->input('current_minutes')
         );

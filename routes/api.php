@@ -23,3 +23,4 @@ Route::apiResource('/effects', EffectController::class);
 Route::post('/effects/consume', [EffectController::class, 'consume']);
 
 Route::apiResource('/hints', HintController::class);
+Route::post('/hints/consume', [HintController::class, 'consume']);

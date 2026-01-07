@@ -482,6 +482,56 @@
                 }
             }
         },
+        "/api/hints/consume": {
+            "post": {
+                "tags": [
+                    "Hints"
+                ],
+                "summary": "Получить новые всплывающие уведомления (hints) и пометить их как прочитанные",
+                "operationId": "7c172b159b3e305ad440fe57b1128a01",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "current_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Токен игрока, получателя уведомления",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "current_minutes": {
+                                        "description": "Текущее игровое время в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Список доставленных уведомлений, помеченных как прочитанные",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Hint"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/mails": {
             "get": {
                 "tags": [
