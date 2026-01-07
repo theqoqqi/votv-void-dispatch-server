@@ -2,19 +2,13 @@
 
 namespace App\Actions\Mail;
 
+use App\Actions\BaseGetAction;
 use App\Models\Mail;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
-class GetMailsAction {
+class GetMailsAction extends BaseGetAction {
 
-    public function __invoke(string $recipientToken, ?int $currentMinutes = null): Collection {
-        $query = Mail::query()
-            ->where('recipient_token', $recipientToken);
-
-        if ($currentMinutes !== null) {
-            $query->where('deliver_at_minutes', '<=', $currentMinutes);
-        }
-
-        return $query->get();
+    protected function createQuery(): Builder {
+        return Mail::query();
     }
 }

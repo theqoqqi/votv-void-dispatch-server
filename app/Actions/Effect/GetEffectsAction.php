@@ -2,19 +2,13 @@
 
 namespace App\Actions\Effect;
 
+use App\Actions\BaseGetAction;
 use App\Models\Effect;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
-class GetEffectsAction {
+class GetEffectsAction extends BaseGetAction {
 
-    public function __invoke(string $recipientToken, ?int $currentMinutes = null): Collection {
-        $query = Effect::query()
-            ->where('recipient_token', $recipientToken);
-
-        if ($currentMinutes !== null) {
-            $query->where('deliver_at_minutes', '<=', $currentMinutes);
-        }
-
-        return $query->get();
+    protected function createQuery(): Builder {
+        return Effect::query();
     }
 }
