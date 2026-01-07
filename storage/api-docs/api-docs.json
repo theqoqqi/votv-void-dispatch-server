@@ -383,6 +383,79 @@
                 }
             }
         },
+        "/api/hints/{hint}": {
+            "patch": {
+                "tags": [
+                    "Hints"
+                ],
+                "summary": "Обновить всплывающее уведомление (hint)",
+                "operationId": "a12e081ca5dc14e35a5b9912cc07f816",
+                "parameters": [
+                    {
+                        "name": "hint",
+                        "in": "path",
+                        "description": "ID уведомления",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Token игрока, получателя уведомления",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "type": {
+                                        "description": "Тип всплывающего уведомления",
+                                        "type": "string",
+                                        "enum": [
+                                            "info",
+                                            "warning",
+                                            "error",
+                                            "thought"
+                                        ],
+                                        "example": "info"
+                                    },
+                                    "text": {
+                                        "description": "Текст уведомления",
+                                        "type": "string",
+                                        "example": "You have a new mission"
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Внутриигровое время доставки в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Hint updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Hint"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Hint not found"
+                    }
+                }
+            }
+        },
         "/api/mails": {
             "get": {
                 "tags": [

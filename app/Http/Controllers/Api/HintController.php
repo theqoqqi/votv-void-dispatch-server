@@ -6,6 +6,7 @@ use App\Actions\Hint\GetHintsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GenericGetRequest;
 use App\Http\Requests\Hint\StoreHintRequest;
+use App\Http\Requests\Hint\UpdateHintRequest;
 use App\Models\Hint;
 use Illuminate\Http\JsonResponse;
 
@@ -62,6 +63,65 @@ class HintController extends Controller {
         $hint = Hint::query()->create($request->validated());
 
         return response()->json($hint, 201);
+    }
+
+    /**
+     * @OA\Patch(
+     *     path="/api/hints/{hint}",
+     *     summary="Обновить всплывающее уведомление (hint)",
+     *     tags={"Hints"},
+     *     @OA\Parameter(
+     *         name="hint",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID уведомления"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="recipient_token",
+     *                     type="string",
+     *                     example="player123",
+     *                     description="Token игрока, получателя уведомления"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="type",
+     *                     type="string",
+     *                     enum={"info","warning","error","thought"},
+     *                     example="info",
+     *                     description="Тип всплывающего уведомления"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="text",
+     *                     type="string",
+     *                     example="You have a new mission",
+     *                     description="Текст уведомления"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="deliver_at_minutes",
+     *                     type="integer",
+     *                     example=1440,
+     *                     description="Внутриигровое время доставки в минутах"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Hint updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Hint")
+     *     ),
+     *     @OA\Response(response=404, description="Hint not found")
+     * )
+     */
+    public function update(UpdateHintRequest $request, Hint $hint): JsonResponse {
+        $hint->update($request->validated());
+
+        return response()->json($hint);
     }
 
     /**
