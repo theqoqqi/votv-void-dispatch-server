@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Actions\Effect\ConsumeEffectsAction;
 use App\Actions\Effect\GetEffectsAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Effect\ConsumeEffectsRequest;
 use App\Http\Requests\Effect\StoreEffectRequest;
 use App\Http\Requests\Effect\UpdateEffectRequest;
+use App\Http\Requests\GenericConsumeRequest;
 use App\Http\Requests\GenericGetRequest;
 use App\Models\Effect;
 use Illuminate\Http\JsonResponse;
@@ -222,7 +222,7 @@ class EffectController extends Controller {
      *     )
      * )
      */
-    public function consume(ConsumeEffectsRequest $request, ConsumeEffectsAction $consumeEffectsAction): JsonResponse {
+    public function consume(GenericConsumeRequest $request, ConsumeEffectsAction $consumeEffectsAction): JsonResponse {
         $effects = $consumeEffectsAction(
             $request->input('recipient_token'),
             $request->input('current_minutes')

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Actions\Mail\ConsumeMailsAction;
 use App\Actions\Mail\GetMailsAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Mail\ConsumeMailsRequest;
+use App\Http\Requests\GenericConsumeRequest;
 use App\Http\Requests\GenericGetRequest;
 use App\Http\Requests\Mail\StoreMailRequest;
 use App\Http\Requests\Mail\UpdateMailRequest;
@@ -257,7 +257,7 @@ class MailController extends Controller {
      *     )
      * )
      */
-    public function consume(ConsumeMailsRequest $request, ConsumeMailsAction $consumeMailsAction): JsonResponse {
+    public function consume(GenericConsumeRequest $request, ConsumeMailsAction $consumeMailsAction): JsonResponse {
         $mails = $consumeMailsAction(
             $request->input('recipient_token'),
             $request->input('current_minutes')
