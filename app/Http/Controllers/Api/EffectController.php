@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Actions\Effect\ConsumeEffectsAction;
 use App\Actions\Effect\GetEffectsAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ConsumeEffectsRequest;
-use App\Http\Requests\GetEffectsRequest;
-use App\Http\Requests\StoreEffectRequest;
-use App\Http\Requests\UpdateEffectRequest;
+use App\Http\Requests\Effect\ConsumeEffectsRequest;
+use App\Http\Requests\Effect\GetEffectsRequest;
+use App\Http\Requests\Effect\StoreEffectRequest;
+use App\Http\Requests\Effect\UpdateEffectRequest;
 use App\Models\Effect;
 use Illuminate\Http\JsonResponse;
 

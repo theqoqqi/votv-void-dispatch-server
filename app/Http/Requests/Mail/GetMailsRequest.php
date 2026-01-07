@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Mail;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetEffectsRequest extends FormRequest {
+class GetMailsRequest extends FormRequest {
 
     public function authorize(): bool {
         return true;

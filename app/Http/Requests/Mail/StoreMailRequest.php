@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Mail;
 
 use App\Models\Mail;
 use Illuminate\Foundation\Http\FormRequest;

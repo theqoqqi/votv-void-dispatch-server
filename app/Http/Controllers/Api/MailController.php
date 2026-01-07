@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Actions\Mail\ConsumeMailsAction;
 use App\Actions\Mail\GetMailsAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ConsumeMailsRequest;
-use App\Http\Requests\GetMailsRequest;
-use App\Http\Requests\StoreMailRequest;
-use App\Http\Requests\UpdateMailRequest;
+use App\Http\Requests\Mail\ConsumeMailsRequest;
+use App\Http\Requests\Mail\GetMailsRequest;
+use App\Http\Requests\Mail\StoreMailRequest;
+use App\Http\Requests\Mail\UpdateMailRequest;
 use App\Models\Mail;
 use Illuminate\Http\JsonResponse;
 
