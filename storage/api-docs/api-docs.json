@@ -969,6 +969,32 @@
             }
         },
         "/api/spawns/{spawn}": {
+            "delete": {
+                "tags": [
+                    "Spawns"
+                ],
+                "summary": "Удалить спаун пропа",
+                "operationId": "da382cf80e68ecff72d32f8dd5de6921",
+                "parameters": [
+                    {
+                        "name": "spawn",
+                        "in": "path",
+                        "description": "ID спауна",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Spawn deleted successfully"
+                    },
+                    "404": {
+                        "description": "Spawn not found"
+                    }
+                }
+            },
             "patch": {
                 "tags": [
                     "Spawns"

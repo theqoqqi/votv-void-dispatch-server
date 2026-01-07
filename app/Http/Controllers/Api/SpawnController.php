@@ -237,6 +237,31 @@ class SpawnController extends Controller {
     }
 
     /**
+     * @OA\Delete(
+     *     path="/api/spawns/{spawn}",
+     *     summary="Удалить спаун пропа",
+     *     tags={"Spawns"},
+     *     @OA\Parameter(
+     *         name="spawn",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID спауна"
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Spawn deleted successfully"
+     *     ),
+     *     @OA\Response(response=404, description="Spawn not found")
+     * )
+     */
+    public function destroy(Spawn $spawn): JsonResponse {
+        $spawn->delete();
+
+        return response()->json(null, 204);
+    }
+
+    /**
      * @OA\Get(
      *     path="/api/spawns",
      *     summary="Получить все спауны пропов",
