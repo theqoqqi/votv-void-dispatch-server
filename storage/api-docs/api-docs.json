@@ -577,7 +577,7 @@
                     "deliver_at_minutes": {
                         "type": "integer"
                     },
-                    "is_applied": {
+                    "is_consumed": {
                         "type": "boolean"
                     },
                     "created_at": {

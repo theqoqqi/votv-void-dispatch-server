@@ -11,13 +11,13 @@ class ConsumeEffectsAction {
         $effects = Effect::query()
             ->where('recipient_token', $recipientToken)
             ->where('deliver_at_minutes', '<=', $currentMinutes)
-            ->where('is_applied', false)
+            ->where('is_consumed', false)
             ->get();
 
         if ($effects->isNotEmpty()) {
             Effect::query()
                 ->whereIn('id', $effects->pluck('id'))
-                ->update(['is_applied' => true]);
+                ->update(['is_consumed' => true]);
         }
 
         return $effects;

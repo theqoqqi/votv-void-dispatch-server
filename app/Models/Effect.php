@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $property
  * @property string|null $value
  * @property int $deliver_at_minutes
- * @property bool $is_applied
+ * @property bool $is_consumed
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  *     @OA\Property(property="property", type="string"),
  *     @OA\Property(property="value", type="string", nullable=true),
  *     @OA\Property(property="deliver_at_minutes", type="integer"),
- *     @OA\Property(property="is_applied", type="boolean"),
+ *     @OA\Property(property="is_consumed", type="boolean"),
  *     @OA\Property(property="created_at", type="string", format="date-time"),
  *     @OA\Property(property="updated_at", type="string", format="date-time")
  * )
@@ -39,7 +39,7 @@ class Effect extends Model {
         'property',
         'value',
         'deliver_at_minutes',
-        'is_applied',
+        'is_consumed',
     ];
 
     public const PROPERTIES = [
