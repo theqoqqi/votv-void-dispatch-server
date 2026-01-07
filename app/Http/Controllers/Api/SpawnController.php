@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Spawn\GetSpawnsAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GenericGetRequest;
 use App\Http\Requests\Spawn\StoreSpawnRequest;
 use App\Models\Spawn;
 use Illuminate\Http\JsonResponse;
@@ -116,5 +118,44 @@ class SpawnController extends Controller {
         $spawn = Spawn::query()->create($request->validated());
 
         return response()->json($spawn, 201);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/spawns",
+     *     summary="Получить все спауны пропов",
+     *     tags={"Spawns"},
+     *     @OA\Parameter(
+     *         name="recipient_token",
+     *         in="query",
+     *         required=true,
+     *         description="Токен игрока или локации",
+     *         @OA\Schema(type="string", example="player123")
+     *     ),
+     *     @OA\Parameter(
+     *         name="current_minutes",
+     *         in="query",
+     *         required=false,
+     *         description="Текущее игровое время в минутах",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список спаунов",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Spawn"))
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="recipient_token не передан"
+     *     )
+     * )
+     */
+    public function index(GenericGetRequest $request, GetSpawnsAction $action): JsonResponse {
+        $spawns = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($spawns);
     }
 }

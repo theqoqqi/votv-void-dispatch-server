@@ -816,6 +816,52 @@
             }
         },
         "/api/spawns": {
+            "get": {
+                "tags": [
+                    "Spawns"
+                ],
+                "summary": "Получить все спауны пропов",
+                "operationId": "57a413462fe1bb1f72384edfbb3b4bd1",
+                "parameters": [
+                    {
+                        "name": "recipient_token",
+                        "in": "query",
+                        "description": "Токен игрока или локации",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "player123"
+                        }
+                    },
+                    {
+                        "name": "current_minutes",
+                        "in": "query",
+                        "description": "Текущее игровое время в минутах",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список спаунов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Spawn"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "recipient_token не передан"
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Spawns"
