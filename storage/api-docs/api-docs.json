@@ -251,6 +251,56 @@
                 }
             }
         },
+        "/api/despawns/consume": {
+            "post": {
+                "tags": [
+                    "Despawns"
+                ],
+                "summary": "Получить новые деспауны пропов и пометить их как выполненные",
+                "operationId": "0509a849928d77d9ebd920b5bf1ae8bb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "current_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Токен игрока или локации",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "current_minutes": {
+                                        "description": "Текущее игровое время в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Список выполненных деспаунов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Despawn"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/effects": {
             "get": {
                 "tags": [

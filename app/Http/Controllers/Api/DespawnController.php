@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Despawn\ConsumeDespawnsAction;
 use App\Actions\Despawn\GetDespawnsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Despawn\StoreDespawnRequest;
 use App\Http\Requests\Despawn\UpdateDespawnRequest;
+use App\Http\Requests\GenericConsumeRequest;
 use App\Http\Requests\GenericGetRequest;
 use App\Models\Despawn;
 use Illuminate\Http\JsonResponse;
@@ -223,6 +225,48 @@ class DespawnController extends Controller {
      */
     public function index(GenericGetRequest $request, GetDespawnsAction $action): JsonResponse {
         $despawns = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($despawns);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/despawns/consume",
+     *     summary="Получить новые деспауны пропов и пометить их как выполненные",
+     *     tags={"Despawns"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"recipient_token","current_minutes"},
+     *                 @OA\Property(
+     *                     property="recipient_token",
+     *                     type="string",
+     *                     example="player123",
+     *                     description="Токен игрока или локации"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="current_minutes",
+     *                     type="integer",
+     *                     example=1440,
+     *                     description="Текущее игровое время в минутах"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список выполненных деспаунов",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Despawn"))
+     *     )
+     * )
+     */
+    public function consume(GenericConsumeRequest $request, ConsumeDespawnsAction $consumeDespawnsAction): JsonResponse {
+        $despawns = $consumeDespawnsAction(
             $request->input('recipient_token'),
             $request->input('current_minutes')
         );
