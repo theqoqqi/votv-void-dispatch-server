@@ -23,7 +23,9 @@ async function processRequestFile(fileName) {
 }
 
 async function getResponseData(data) {
-    console.log(`${data.method} ${data.url}...`);
+    const time = new Date().toLocaleTimeString();
+
+    console.log(`[${time}] ${data.method} ${data.url}...`);
 
     try {
         if (data.method === 'GET') {
