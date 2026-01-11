@@ -12,6 +12,87 @@
         }
     ],
     "paths": {
+        "/api/despawns": {
+            "post": {
+                "tags": [
+                    "Despawns"
+                ],
+                "summary": "Добавить деспаун пропа",
+                "operationId": "73d2cef71aa853d5e295e50893934f8c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "recipient_token",
+                                    "name",
+                                    "location_x",
+                                    "location_y",
+                                    "location_z",
+                                    "tolerance_radius",
+                                    "deliver_at_minutes"
+                                ],
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Токен игрока или локации",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "name": {
+                                        "description": "Название пропа для удаления",
+                                        "type": "string",
+                                        "example": "prop_001"
+                                    },
+                                    "location_x": {
+                                        "description": "Координата X",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10.5
+                                    },
+                                    "location_y": {
+                                        "description": "Координата Y",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 20.3
+                                    },
+                                    "location_z": {
+                                        "description": "Координата Z",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5
+                                    },
+                                    "tolerance_radius": {
+                                        "description": "Радиус погрешности",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 2.5
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Время деспауна в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Despawn created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Despawn"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/effects": {
             "get": {
                 "tags": [
@@ -1385,6 +1466,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Despawns",
+            "description": "Despawns"
+        },
         {
             "name": "Effects",
             "description": "Effects"
