@@ -167,6 +167,31 @@ class DespawnController extends Controller {
     }
 
     /**
+     * @OA\Delete(
+     *     path="/api/despawns/{despawn}",
+     *     summary="Удалить деспаун пропа",
+     *     tags={"Despawns"},
+     *     @OA\Parameter(
+     *         name="despawn",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID деспауна"
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Despawn deleted successfully"
+     *     ),
+     *     @OA\Response(response=404, description="Despawn not found")
+     * )
+     */
+    public function destroy(Despawn $despawn): JsonResponse {
+        $despawn->delete();
+
+        return response()->json(null, 204);
+    }
+
+    /**
      * @OA\Get(
      *     path="/api/despawns",
      *     summary="Получить все деспауны пропов",

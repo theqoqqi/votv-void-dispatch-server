@@ -140,6 +140,32 @@
             }
         },
         "/api/despawns/{despawn}": {
+            "delete": {
+                "tags": [
+                    "Despawns"
+                ],
+                "summary": "Удалить деспаун пропа",
+                "operationId": "6316807a699f3948a060bc60f1f1f139",
+                "parameters": [
+                    {
+                        "name": "despawn",
+                        "in": "path",
+                        "description": "ID деспауна",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Despawn deleted successfully"
+                    },
+                    "404": {
+                        "description": "Despawn not found"
+                    }
+                }
+            },
             "patch": {
                 "tags": [
                     "Despawns"
