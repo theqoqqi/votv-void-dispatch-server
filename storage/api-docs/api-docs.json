@@ -1163,6 +1163,51 @@
     },
     "components": {
         "schemas": {
+            "Despawn": {
+                "properties": {
+                    "id": {
+                        "description": "Class Despawn",
+                        "type": "integer"
+                    },
+                    "recipient_token": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "location_x": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "location_y": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "location_z": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "tolerance_radius": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "deliver_at_minutes": {
+                        "type": "integer"
+                    },
+                    "is_consumed": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
             "Effect": {
                 "properties": {
                     "id": {
