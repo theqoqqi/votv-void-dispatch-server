@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Despawn\GetDespawnsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Despawn\StoreDespawnRequest;
+use App\Http\Requests\GenericGetRequest;
 use App\Models\Despawn;
 use Illuminate\Http\JsonResponse;
 
@@ -81,5 +83,44 @@ class DespawnController extends Controller {
         $despawn = Despawn::query()->create($request->validated());
 
         return response()->json($despawn, 201);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/despawns",
+     *     summary="Получить все деспауны пропов",
+     *     tags={"Despawns"},
+     *     @OA\Parameter(
+     *         name="recipient_token",
+     *         in="query",
+     *         required=true,
+     *         description="Токен игрока или локации",
+     *         @OA\Schema(type="string", example="player123")
+     *     ),
+     *     @OA\Parameter(
+     *         name="current_minutes",
+     *         in="query",
+     *         required=false,
+     *         description="Текущее игровое время в минутах",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список деспаунов",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Despawn"))
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="recipient_token не передан"
+     *     )
+     * )
+     */
+    public function index(GenericGetRequest $request, GetDespawnsAction $action): JsonResponse {
+        $despawns = $action(
+            $request->input('recipient_token'),
+            $request->input('current_minutes')
+        );
+
+        return response()->json($despawns);
     }
 }

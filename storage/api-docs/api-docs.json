@@ -13,6 +13,52 @@
     ],
     "paths": {
         "/api/despawns": {
+            "get": {
+                "tags": [
+                    "Despawns"
+                ],
+                "summary": "Получить все деспауны пропов",
+                "operationId": "4748ad5a8086fae37aecdcba3ee81ad6",
+                "parameters": [
+                    {
+                        "name": "recipient_token",
+                        "in": "query",
+                        "description": "Токен игрока или локации",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "player123"
+                        }
+                    },
+                    {
+                        "name": "current_minutes",
+                        "in": "query",
+                        "description": "Текущее игровое время в минутах",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список деспаунов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Despawn"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "recipient_token не передан"
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Despawns"
