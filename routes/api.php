@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\HintController;
 use App\Http\Controllers\Api\MailController;
 use App\Http\Controllers\Api\EffectController;
 use App\Http\Controllers\Api\SpawnController;
+use App\Http\Controllers\Api\DespawnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,6 @@ Route::post('/hints/consume', [HintController::class, 'consume']);
 
 Route::apiResource('/spawns', SpawnController::class);
 Route::post('/spawns/consume', [SpawnController::class, 'consume']);
+
+Route::apiResource('/despawns', DespawnController::class);
+Route::post('/despawns/consume', [DespawnController::class, 'consume']);
