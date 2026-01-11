@@ -139,6 +139,92 @@
                 }
             }
         },
+        "/api/despawns/{despawn}": {
+            "patch": {
+                "tags": [
+                    "Despawns"
+                ],
+                "summary": "Обновить деспаун пропа",
+                "operationId": "c1e78a4164342eae4f94d6b7eb67612e",
+                "parameters": [
+                    {
+                        "name": "despawn",
+                        "in": "path",
+                        "description": "ID деспауна",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "recipient_token": {
+                                        "description": "Токен игрока или локации",
+                                        "type": "string",
+                                        "example": "player123"
+                                    },
+                                    "name": {
+                                        "description": "Название пропа для удаления",
+                                        "type": "string",
+                                        "example": "prop_001"
+                                    },
+                                    "location_x": {
+                                        "description": "Координата X",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10.5
+                                    },
+                                    "location_y": {
+                                        "description": "Координата Y",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 20.3
+                                    },
+                                    "location_z": {
+                                        "description": "Координата Z",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5
+                                    },
+                                    "tolerance_radius": {
+                                        "description": "Радиус погрешности",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 2.5
+                                    },
+                                    "deliver_at_minutes": {
+                                        "description": "Время деспауна в минутах",
+                                        "type": "integer",
+                                        "example": 1440
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Despawn updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Despawn"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Despawn not found"
+                    }
+                }
+            }
+        },
         "/api/effects": {
             "get": {
                 "tags": [

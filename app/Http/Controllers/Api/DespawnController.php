@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Actions\Despawn\GetDespawnsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Despawn\StoreDespawnRequest;
+use App\Http\Requests\Despawn\UpdateDespawnRequest;
 use App\Http\Requests\GenericGetRequest;
 use App\Models\Despawn;
 use Illuminate\Http\JsonResponse;
@@ -83,6 +84,86 @@ class DespawnController extends Controller {
         $despawn = Despawn::query()->create($request->validated());
 
         return response()->json($despawn, 201);
+    }
+
+    /**
+     * @OA\Patch(
+     *     path="/api/despawns/{despawn}",
+     *     summary="Обновить деспаун пропа",
+     *     tags={"Despawns"},
+     *     @OA\Parameter(
+     *         name="despawn",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         description="ID деспауна"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="recipient_token",
+     *                     type="string",
+     *                     example="player123",
+     *                     description="Токен игрока или локации"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     example="prop_001",
+     *                     description="Название пропа для удаления"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="location_x",
+     *                     type="number",
+     *                     format="float",
+     *                     example=10.5,
+     *                     description="Координата X"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="location_y",
+     *                     type="number",
+     *                     format="float",
+     *                     example=20.3,
+     *                     description="Координата Y"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="location_z",
+     *                     type="number",
+     *                     format="float",
+     *                     example=5.0,
+     *                     description="Координата Z"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="tolerance_radius",
+     *                     type="number",
+     *                     format="float",
+     *                     example=2.5,
+     *                     description="Радиус погрешности"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="deliver_at_minutes",
+     *                     type="integer",
+     *                     example=1440,
+     *                     description="Время деспауна в минутах"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Despawn updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Despawn")
+     *     ),
+     *     @OA\Response(response=404, description="Despawn not found")
+     * )
+     */
+    public function update(UpdateDespawnRequest $request, Despawn $despawn): JsonResponse {
+        $despawn->update($request->validated());
+
+        return response()->json($despawn);
     }
 
     /**
