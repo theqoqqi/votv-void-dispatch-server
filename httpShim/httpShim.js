@@ -8,18 +8,29 @@ const REQUESTS_DIR = path.join(SHIM_DIR, 'Requests');
 const RESPONSES_DIR = path.join(SHIM_DIR, 'Responses');
 
 async function processRequestFile(fileName) {
+    const requestJson = await consumeRequestFile(fileName);
+
+    getResponseData(requestJson)
+        .then(responseJson => saveResponse(responseJson, fileName))
+        .catch(err => console.error(`Error processing request file ${fileName}:`, err));
+}
+
+async function consumeRequestFile(fileName) {
     const filePath = path.join(REQUESTS_DIR, fileName);
     const content = await fs.promises.readFile(filePath, 'utf-8');
 
-    const requestData = parseFlatStruct(content);
-    const responseJson = await getResponseData(requestData);
+    await fs.promises.unlink(filePath);
+
+    return parseFlatStruct(content);
+}
+
+async function saveResponse(responseJson, fileName) {
     const responseData = buildFlatStruct(responseJson);
 
     const responseFilePath = path.join(RESPONSES_DIR, fileName);
     const fileContent = createResponseFileContent(responseData, 200);
 
     await fs.promises.writeFile(responseFilePath, fileContent, 'utf-8');
-    await fs.promises.unlink(filePath);
 }
 
 async function getResponseData(data) {
@@ -160,9 +171,7 @@ async function handleRequestFiles() {
 
     for (const file of files) {
         if (file.endsWith('.txt')) {
-            processRequestFile(file).catch(err => {
-                console.error(`Error processing request file ${file}:`, err);
-            });
+            await processRequestFile(file);
         }
     }
 }
