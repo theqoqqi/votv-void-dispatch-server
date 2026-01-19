@@ -188,7 +188,11 @@ async function handleRequestFiles() {
 
     for (const file of files) {
         if (file.endsWith('.txt')) {
-            await processRequestFile(file);
+            try {
+                await processRequestFile(file);
+            } catch (err) {
+                console.error(`Error processing request file ${file}:`, err);
+            }
         }
     }
 }
