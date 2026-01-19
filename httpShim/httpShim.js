@@ -10,6 +10,11 @@ const RESPONSES_DIR = path.join(SHIM_DIR, 'Responses');
 async function processRequestFile(fileName) {
     const requestJson = await consumeRequestFile(fileName);
 
+    if (!requestJson) {
+        console.log(`Skipping request file ${fileName}.`);
+        return;
+    }
+
     getResponseData(requestJson)
         .then(responseJson => saveResponse(responseJson, fileName))
         .catch(err => console.error(`Error processing request file ${fileName}:`, err));
@@ -17,11 +22,23 @@ async function processRequestFile(fileName) {
 
 async function consumeRequestFile(fileName) {
     const filePath = path.join(REQUESTS_DIR, fileName);
+
+    if (await isRequestFileOutdated(filePath)) {
+        return null;
+    }
+
     const content = await fs.promises.readFile(filePath, 'utf-8');
 
     await fs.promises.unlink(filePath);
 
     return parseFlatStruct(content);
+}
+
+async function isRequestFileOutdated(filePath) {
+    const MAX_AGE_MS = 60 * 1000;
+    const stat = await fs.promises.stat(filePath);
+
+    return Date.now() - stat.mtimeMs > MAX_AGE_MS;
 }
 
 async function saveResponse(responseJson, fileName) {
